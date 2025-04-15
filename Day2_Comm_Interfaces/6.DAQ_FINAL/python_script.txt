@@ -1,0 +1,12 @@
+import serial
+
+# Replace 'COM3' with your serial port (e.g., '/dev/ttyUSB0' on Linux)
+ser = serial.Serial(port='COM7', baudrate=115200, timeout=1)
+
+print("Listening on COM7...")
+
+while True:
+    if ser.in_waiting >= 2:
+        data = ser.read(2)  # Read 2 bytes
+        value = int.from_bytes(data, byteorder='big')  # or 'little' if LSB first
+        print(f"Received: {data.hex().upper()} → 16-bit Value: {value} (0x{value:04X})")
