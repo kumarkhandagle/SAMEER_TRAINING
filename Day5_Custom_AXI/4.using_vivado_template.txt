@@ -1,0 +1,33 @@
+#include "xparameters.h"
+#include "xil_printf.h"
+#include "platform.h"
+
+int main()
+{
+    init_platform();
+
+    volatile u32 *axi_adder_pointer_base = (u32 *)XPAR_AXI_ADDER_0_S00_AXI_BASEADDR;
+
+    xil_printf("Initial values:\n");
+    xil_printf("reg0: %08x, reg1: %08x, reg2: %08x, reg3: %08x\n",
+               axi_adder_pointer_base[0],
+               axi_adder_pointer_base[1],
+               axi_adder_pointer_base[2],
+               axi_adder_pointer_base[3]);
+
+    // Writing values to registers
+    axi_adder_pointer_base[0] = 0x00001111;
+    axi_adder_pointer_base[1] = 0x00002222;
+    axi_adder_pointer_base[2] = 0x00003333;
+    axi_adder_pointer_base[3] = 0x00004444;
+
+    xil_printf("After write:\n");
+    xil_printf("reg0: %08x, reg1: %08x, reg2: %08x, reg3: %08x\n",
+               axi_adder_pointer_base[0],
+               axi_adder_pointer_base[1],
+               axi_adder_pointer_base[2],
+               axi_adder_pointer_base[3]);
+
+    cleanup_platform();
+    return 0;
+}
