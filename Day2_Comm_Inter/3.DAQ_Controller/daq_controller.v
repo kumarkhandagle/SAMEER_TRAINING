@@ -47,7 +47,7 @@ reg [2:0] state, nstate;
 //--------------------------------------------------------
 // State Register (Synchronous Reset)
 //--------------------------------------------------------
-always @(posedge clk) begin
+always @(posedge clk or negedge reset_n) begin
     if (!reset_n)
         state <= IDLE;
     else

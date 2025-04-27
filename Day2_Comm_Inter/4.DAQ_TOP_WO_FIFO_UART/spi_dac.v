@@ -55,13 +55,13 @@ reg enShiftCounter;
 
 
 // Sequential logic block: sensitive to positive edge of clk_div
-always @(posedge clk_12mhz) begin
+always @(posedge clk_12mhz or negedge rst_n) begin
     if (!rst_n) begin
         shiftCounter <= 4'b0000;                    
         temp1        <= 16'h0;          
         temp2        <= 16'h0;
         end
-    else if (start) begin
+    else if (start && state == SHIFT_DATA) begin
         shiftCounter <= 4'b0000;                    // Reset counter
         temp1        <= {4'b0000, dac_in1};           // Concatenate control + DATA1
   //    temp2        <= {4'b0000, dac_in2};           // Concatenate control + DATA2
@@ -88,7 +88,7 @@ parameter IDLE       = 2'd0,
 reg [1:0] state, nstate;
 
 // Sequential logic for state update
-always @(posedge clk_12mhz) begin
+always @(posedge clk_12mhz or negedge rst_n) begin
     if (!rst_n)
         state <= IDLE;
     else
@@ -159,14 +159,6 @@ always @(*) begin
     endcase
 end
 
-/////counter
-always@(posedge sclk)
-begin
-case(state)
-IDLE, SAMPLE, DONE : shiftCounter <= 0;
-SHIFT_DATA : shiftCounter <= shiftCounter + 1;
-default : shiftCounter <= 0;
-endcase
-end
+
 
 endmodule

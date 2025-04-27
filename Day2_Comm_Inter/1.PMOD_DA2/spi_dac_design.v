@@ -100,7 +100,7 @@ reg enShiftCounter;
 
 
 // Sequential logic block: sensitive to positive edge of clk_div
-always @(posedge clk_12mhz) begin
+always @(posedge clk_12mhz or negedge rst_n) begin
     if (!rst_n) begin
         shiftCounter <= 4'b0000;                    
         temp1        <= 16'h0;          
@@ -133,7 +133,7 @@ parameter IDLE       = 2'd0,
 reg [1:0] state, nstate;
 
 // Sequential logic for state update
-always @(posedge clk_12mhz) begin
+always @(posedge clk_12mhz or negedge rst_n) begin
     if (!rst_n)
         state <= IDLE;
     else

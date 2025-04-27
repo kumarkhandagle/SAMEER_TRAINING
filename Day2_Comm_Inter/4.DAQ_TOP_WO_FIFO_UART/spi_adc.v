@@ -32,7 +32,7 @@ reg [1:0] state, nstate;           // FSM state and next state
 
 
 // Clock divider to generate ~12.5 MHz sclk from system clock
-always @(posedge clk) begin
+always @(posedge clk or negedge reset_n) begin
     if (!reset_n) begin
         count_clk <= 0;
         sclk <= 0;
@@ -45,7 +45,7 @@ always @(posedge clk) begin
 end
 
 // Data shifting logic on sclk edge
-always @(posedge sclk) begin
+always @(posedge sclk or negedge reset_n) begin
     if (!reset_n) begin
         bit_count  <= 0;
         adc1_data  <= 16'h0000;
@@ -60,7 +60,7 @@ always @(posedge sclk) begin
 end
 
 // FSM state update
-always @(posedge sclk) begin
+always @(posedge sclk or negedge reset_n) begin
     if (!reset_n)
         state <= IDLE;
     else

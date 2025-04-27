@@ -35,7 +35,7 @@ parameter IDLE = 0,
 reg [2:0] state,nstate;
 
 /////reset decoder
-always@(posedge clk)
+always@(posedge clk or negedge reset_n)
 begin
 if(!reset_n)
 state <= IDLE;
