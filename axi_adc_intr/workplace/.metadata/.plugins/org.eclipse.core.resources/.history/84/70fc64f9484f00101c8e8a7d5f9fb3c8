@@ -1,0 +1,118 @@
+#include "platform.h"
+#include "xil_printf.h"
+#include "xscugic.h"
+#include "xparameters.h"
+#include "xgpio.h"
+
+XScuGic gicHandler;
+XGpio ledInst;
+XGpio swInst;
+
+static volatile u32 prev_sw_state = 0;
+
+/* -------------------------  GPIO ISR  ---------------------------- */
+void sw_handler()
+{
+    /* make sure CH-1 really interrupted us */
+    if ((XGpio_InterruptGetStatus(&swInst) & XGPIO_IR_CH1_MASK) == 0)
+        return;
+
+    /* ACK & mask */
+    XGpio_InterruptDisable(&swInst, XGPIO_IR_CH1_MASK);
+    (void)XGpio_InterruptClear(&swInst, XGPIO_IR_CH1_MASK);
+
+    /* current level of all 8 DIP-switch bits */
+    u32 curr_state   = XGpio_DiscreteRead(&swInst, 1);
+
+    /* bits that just transitioned 0 -> 1 (= positive edge) */
+    u32 rising_edges = curr_state & ~prev_sw_state;
+
+    if (rising_edges) {                      /* **ignore falling edges** */
+        xil_printf("Pos-edge detected. Switch value = 0x%02X\n\r",
+                   curr_state);
+        XGpio_DiscreteWrite(&ledInst, 1, curr_state);
+    }
+
+    prev_sw_state = curr_state;              /* update history */
+
+    XGpio_InterruptEnable(&swInst, XGPIO_IR_CH1_MASK);
+}
+
+
+
+
+void peri_init(){
+
+
+	s32 status;
+	XGpio_Config *ledConfig;
+	XGpio_Config *swConfig;
+
+	////// Sw initialization
+	swConfig = XGpio_LookupConfig(XPAR_AXI_GPIO_0_DEVICE_ID);
+    status = XGpio_CfgInitialize(&swInst, swConfig, swConfig->BaseAddress);
+		if (status == XST_SUCCESS)
+				xil_printf("SW init Successful\n\r");
+	    else
+				xil_printf("SW init Failed\n\r");
+    XGpio_SetDataDirection(&swInst, 1, 0xFF);
+
+	//// LED initialization
+	ledConfig = XGpio_LookupConfig(XPAR_AXI_GPIO_1_DEVICE_ID);
+	status = XGpio_CfgInitialize(&ledInst, ledConfig, ledConfig->BaseAddress);
+	if(status == XST_SUCCESS)
+			xil_printf("LED init Successful\n\r");
+		else
+			xil_printf("LED init Failed\n\r");
+	XGpio_SetDataDirection(&ledInst, 1, 0x00);
+
+	////// notify cpu to ready for exception, register handler for intr , enable specific type of intr
+	 Xil_ExceptionInit(); ///Initializes the exception vector table
+
+	  //Registers your interrupt controller’s handler for IRQ exceptions.
+     Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_IRQ_INT,  //// interrupt request from hardware iRQ
+				(Xil_ExceptionHandler) XScuGic_InterruptHandler,
+				 &gicHandler);
+     ///// unmask irq, enable irq globally
+     Xil_ExceptionEnable();
+
+     //// creating instance of GIC
+     XScuGic_Config *gicConfig;
+     gicConfig  = XScuGic_LookupConfig(XPAR_PS7_SCUGIC_0_DEVICE_ID);
+     status = XScuGic_CfgInitialize(&gicHandler, gicConfig, gicConfig->CpuBaseAddress);
+     if (status == XST_SUCCESS)
+     {
+    	 xil_printf("GIC init done\n\r");
+     }
+     else
+     {
+    	 xil_printf("GIC init failed\n\r");
+     }
+
+     ///////specify handler to be executed when specified peripheral send intr reques
+
+     status = XScuGic_Connect(&gicHandler, XPAR_FABRIC_GPIO_0_VEC_ID,
+     			(Xil_ExceptionHandler)sw_handler, (void *) &swInst);
+
+     XScuGic_Enable(&gicHandler, XPAR_FABRIC_GPIO_0_VEC_ID);
+
+ 	 XGpio_InterruptEnable(&swInst, 1);
+ 	 XGpio_InterruptGlobalEnable(&swInst);
+
+
+
+
+}
+
+int main()
+{
+    init_platform();
+    peri_init();
+
+    print("UART init done\n\r");
+
+    while(1);
+
+    cleanup_platform();
+    return 0;
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sdkproject:SdkProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdkproject="http://www.xilinx.com/sdkproject" name="intr_adc_app" location="C:/Users/kumar/axi_adc_intr/workplace/intr_adc_app" platform="C:/Users/kumar/axi_adc_intr/workplace/intr_adc/export/intr_adc/intr_adc.xpfm" platformUID="xilinx:zybo-z7-10::0.0(custom)" systemProject="intr_adc_app_system" sysConfig="intr_adc" runtime="C/C++" cpu="standalone_domain" cpuInstance="ps7_cortexa9_0" os="standalone" mssSignature="2a47c30629491a0e151c901b541adc49">
+  <configuration name="Debug" id="xilinx.gnu.armv7.exe.debug.1540476782">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+    <lastBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <configuration name="Release" id="xilinx.gnu.armv7.exe.release.1950102782" dirty="true">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <template appTemplateName="hello_world"/>
+</sdkproject:SdkProject>

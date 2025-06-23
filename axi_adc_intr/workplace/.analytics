@@ -1,0 +1,5 @@
+timestamp=[2025-06-22 14:38:32], mode=WORKBENCH_START, duration=0:00:03.052, duration_ms=3052, data={}
+timestamp=[2025-06-22 14:38:32], mode=WORKBENCH_UI_INIT, duration=0:00:00.217, duration_ms=217, data={editors_count=0, platform_editors_count=0, projects_count=0, platform_projects_count=0, active_platform_editor=false, projects=}
+timestamp=[2025-06-22 14:39:23], mode=PLATFORM_CREATION, duration=0:00:10.418, duration_ms=10418, data={platform_source=dsa, os=standalone, processor=ps7_cortexa9, platform=null}
+timestamp=[2025-06-22 14:40:04], mode=PLATFORM_GENERATION, duration=0:00:35.688, duration_ms=35688, data={name=intr_adc}
+timestamp=[2025-06-22 14:40:28], mode=APP_CREATION, duration=0:00:04.344, duration_ms=4344, data={name=intr_adc_app, project_type=sdk, os=standalone, processor=cortex-a9, runtime=C/C++, platform=intr_adc, application_type=application}

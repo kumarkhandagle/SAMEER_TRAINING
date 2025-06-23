@@ -1,0 +1,10 @@
+14:54:38 **** Incremental Build of configuration Debug for project intr_adc_app_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 59967 C:/Users/kumar/axi_adc_intr/workplace/intr_adc/export/intr_adc/intr_adc.xpfm standalone_domain C:/Users/kumar/axi_adc_intr/workplace/intr_adc_app_system/Debug/system.bif
+sdcard_gen --xpfm C:/Users/kumar/axi_adc_intr/workplace/intr_adc/export/intr_adc/intr_adc.xpfm --sys_config intr_adc --bif C:/Users/kumar/axi_adc_intr/workplace/intr_adc_app_system/Debug/system.bif --bitstream C:/Users/kumar/axi_adc_intr/workplace/intr_adc_app/_ide/bitstream/design_1_wrapper.bit --elf C:/Users/kumar/axi_adc_intr/workplace/intr_adc_app/Debug/intr_adc_app.elf,ps7_cortexa9_0
+creating BOOT.BIN using C:/Users/kumar/axi_adc_intr/workplace/intr_adc_app/_ide/bitstream/design_1_wrapper.bit
+Running C:/Xilinx/Vivado_2019/Vitis/2019.2/bin/bootgen  -image C:/Users/kumar/axi_adc_intr/workplace/intr_adc_app_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+
+14:54:41 Build Finished (took 3s.772ms)
+

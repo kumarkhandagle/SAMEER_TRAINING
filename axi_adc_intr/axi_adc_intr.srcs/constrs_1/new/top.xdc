@@ -1,0 +1,8 @@
+set_property PACKAGE_PIN V15 [get_ports cs_n]
+set_property IOSTANDARD LVCMOS33 [get_ports cs_n]
+set_property PACKAGE_PIN W15 [get_ports din1]
+set_property IOSTANDARD LVCMOS33 [get_ports din1]
+set_property PACKAGE_PIN T11 [get_ports din2]
+set_property IOSTANDARD LVCMOS33 [get_ports din2]
+set_property PACKAGE_PIN T10 [get_ports sclk]
+set_property IOSTANDARD LVCMOS33 [get_ports sclk]

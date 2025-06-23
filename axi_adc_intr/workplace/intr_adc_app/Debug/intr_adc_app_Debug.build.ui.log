@@ -1,0 +1,25 @@
+2025-06-22T14:54:37.067794500255-14:54:37 **** Incremental Build of configuration Debug for project intr_adc_app ****
+000-make all 
+000-make --no-print-directory pre-build
+000-a9-linaro-pre-build-step
+000- 
+000-make --no-print-directory main-build
+000-Building file: ../src/helloworld.c
+000-Invoking: ARM v7 gcc compiler
+000-arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/Users/kumar/axi_adc_intr/workplace/intr_adc/export/intr_adc/sw/intr_adc/standalone_domain/bspinclude/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+000-Finished building: ../src/helloworld.c
+000- 
+000-Building target: intr_adc_app.elf
+000-Invoking: ARM v7 gcc linker
+000-arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/Users/kumar/axi_adc_intr/workplace/intr_adc/export/intr_adc/sw/intr_adc/standalone_domain/bsplib/lib -o "intr_adc_app.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+000-Finished building target: intr_adc_app.elf
+000- 
+000-Invoking: ARM v7 Print Size
+000-arm-none-eabi-size intr_adc_app.elf  |tee "intr_adc_app.elf.size"
+000-   text	   data	    bss	    dec	    hex	filename
+000-  35656	   2352	  23320	  61328	   ef90	intr_adc_app.elf
+000-Finished building: intr_adc_app.elf.size
+000- 
+00255-
+14:54:37 Build Finished (took 674ms)
+
